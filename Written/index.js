@@ -13,28 +13,25 @@ const transactions = [{
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.send(transactions)
+    return res.send(transactions)
 })
+
 
 app.post('/', (req, res) => {
     const transaction = req.body
     transactions.push(transaction)
-    res.send(`successfully added transaction #: ${transaction.id}, in the amount of ${transaction.amount} to: ${transaction.to}`)
-    res.end()
+    return res.send(`successfully added transaction #: ${transaction.id}, in the amount of ${transaction.amount} to: ${transaction.to}`)
 })
 
 app.delete('/', (req, res) => {
     const transaction = req.body
-    console.log(transaction)
     const transactionIndex = transactions.findIndex(item => item.id == transaction.id)
     if (transactionIndex === -1) {
         res.send("no transaction with that id exists")
         return
     }
-    console.log(transactionIndex)
-    
     transactions.splice(transactionIndex, 1)
-    res.send(`sucessfully deleted transaction #: ${transaction.id}}}`)
+    return res.send(`sucessfully deleted transaction #: ${transaction.id}}}`)
 })
 
 app.listen(port, () => {
